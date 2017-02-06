@@ -2,5 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.m2m.atl.core_3.5.0.v201405260755.jar" sourcepath="/Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.m2m.atl.core.source_3.5.0.v201405260755.jar">
+		<accessrules>
+			<accessrule kind="accessible" pattern="org/eclipse/m2m/atl/core/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/m2m/atl/core/launch/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/m2m/atl/core/service/*"/>
+			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
+		</accessrules>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
