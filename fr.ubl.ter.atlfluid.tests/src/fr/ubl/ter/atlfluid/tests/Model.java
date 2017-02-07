@@ -15,4 +15,14 @@ public class Model {
 		this.name = name;
 		this.metaModel = meta;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getMetaModel() {
+		return metaModel;
+	}
+	
+	
 }

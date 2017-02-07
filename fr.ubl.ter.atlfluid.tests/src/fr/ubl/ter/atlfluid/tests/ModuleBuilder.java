@@ -7,8 +7,8 @@ public class ModuleBuilder {
 	private List<RuleBuilder> rules = new ArrayList<RuleBuilder>();
 	
 	private String moduleName;
-	private List<Model> outModels;
-	private List<Model> inModels;
+	private List<Model> outModels = new ArrayList<Model>();
+	private List<Model> inModels = new ArrayList<Model>();
 	
 	public ModuleBuilder module(String name) {
 		moduleName = name;
@@ -31,6 +31,20 @@ public class ModuleBuilder {
 		child.setName(ruleName);
 		return child;
 		
+	}
+	
+	public Module getContent(){
+		Module result = new Module(moduleName);
+		for(Model m : inModels){
+			result.addInModel(m);
+		}
+		for(Model m : outModels){
+			result.addOutModel(m);
+		}
+		for(RuleBuilder rb : rules){
+			result.addRule(rb.getContent());
+		}
+		return result;
 	}
 
 }

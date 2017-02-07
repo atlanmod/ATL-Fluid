@@ -48,11 +48,7 @@ public class RuleBuilder {
 		return parent.rule(ruleName);
 	}
 	
-	/*
-	 * 
-	 
-	public Rule getContents() {
+	public Rule getContent() {
 		return new Rule(name, inVar, inType, condition, outVar, outType, bindings);
 	}
-	*/
 }

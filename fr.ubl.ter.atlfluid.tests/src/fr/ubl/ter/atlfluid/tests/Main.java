@@ -21,6 +21,9 @@ public class Main {
 			.rule("DataType2Type")
 				.from
 		*/
+		
+		Module module = moduleBuilder.getContent();
+		System.out.println(module);
 	}
 }
 
