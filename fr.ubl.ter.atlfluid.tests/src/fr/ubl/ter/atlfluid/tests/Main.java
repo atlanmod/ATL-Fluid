@@ -16,7 +16,13 @@ public class Main {
 					.pattern("not p.ownedElements.isEmpty()")
 				.to("out","Relational!Schema")
 					.bind("name","p.name")
-					.bind("ownedElements","p.ownedElements");
+					.bind("ownedElements","p.ownedElements")
+			.rule("DataType2Type")
+				.from("d", "ClassDiagram!DataType")
+					.pattern("ClassDiagram!Class.allInstances()->select(c | c.name = d.name)->isEmpty()")
+				.to("t", "Relational!Type")
+					.bind("name", "d.name");
+				
 			/* Partie non encore implémentée
 			.rule("DataType2Type")
 				.from

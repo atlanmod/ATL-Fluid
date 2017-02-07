@@ -17,15 +17,43 @@ public class RuleBuilder {
 		this.parent = parent;
 	}
 	
+	private void verifyType(String type){
+		if(!type.contains("!")){
+			throw new Error("the type is not defined");
+		}else{
+			String str = type.substring(0,type.indexOf('!'));
+			boolean found = false;
+			for(Model m : parent.getInModel()){
+				if(m.getMetaModel().equals(str)){
+					found = true;
+					break;
+				}
+			}
+			if(!found){
+				for(Model m : parent.getOutModels()){
+					if(m.getMetaModel().equals(str)){
+						found = true;
+						break;
+					}
+				}
+			}
+			if(!found){
+				throw new Error("type is not defined");
+			}
+		}
+	}
+	
 	public RuleBuilder from(String var, String type) {
 		inVar = var;
 		inType = type;
+		verifyType(type);
 		return this;
 	}
 	
 	public RuleBuilder to(String var, String type) {
 		outVar = var;
 		outType = type;
+		verifyType(type);
 		return this;
 	}
 	

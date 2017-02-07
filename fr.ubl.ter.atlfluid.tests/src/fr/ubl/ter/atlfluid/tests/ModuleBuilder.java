@@ -33,6 +33,14 @@ public class ModuleBuilder {
 		
 	}
 	
+	public List<Model> getInModel(){
+		return inModels;
+	}
+	
+	public List<Model> getOutModels(){
+		return outModels;
+	}
+	
 	public Module getContent(){
 		Module result = new Module(moduleName);
 		for(Model m : inModels){
