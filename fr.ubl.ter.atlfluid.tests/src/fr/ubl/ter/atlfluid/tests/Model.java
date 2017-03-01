@@ -1,6 +1,5 @@
 package fr.ubl.ter.atlfluid.tests;
 
-
 /*
  * Classe placeholder
  * Il doit exister une classe dans le framework ATL ou EMF qu'il convient d'utiliser

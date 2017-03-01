@@ -3,12 +3,17 @@ package fr.ubl.ter.atlfluid.tests;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ModuleBuilder {
 	private List<RuleBuilder> rules = new ArrayList<RuleBuilder>();
 	
 	private String moduleName;
 	private List<Model> outModels = new ArrayList<Model>();
 	private List<Model> inModels = new ArrayList<Model>();
+	
+	public ModuleBuilder(){
+		
+	}
 	
 	public ModuleBuilder module(String name) {
 		moduleName = name;
