@@ -1,6 +1,5 @@
 package fr.ubl.ter.atlfluid.tests;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rule {

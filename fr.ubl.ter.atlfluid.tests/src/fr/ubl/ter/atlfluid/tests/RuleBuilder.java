@@ -79,4 +79,5 @@ public class RuleBuilder {
 	public Rule getContent() {
 		return new Rule(name, inVar, inType, condition, outVar, outType, bindings);
 	}
+	
 }

@@ -3,9 +3,6 @@ package fr.ubl.ter.atlfluid.tests;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
-import org.eclipse.m2m.atl.emftvm.EmftvmPackage;
-import org.eclipse.m2m.atl.emftvm.Metamodel;
 
 public class Module {
 	private String moduleName;
