@@ -23,14 +23,14 @@ public class RuleBuilder {
 		}else{
 			String str = type.substring(0,type.indexOf('!'));
 			boolean found = false;
-			for(Model m : parent.getInModel()){
+			for(ModelR m : parent.getInModel()){
 				if(m.getMetaModel().equals(str)){
 					found = true;
 					break;
 				}
 			}
 			if(!found){
-				for(Model m : parent.getOutModels()){
+				for(ModelR m : parent.getOutModels()){
 					if(m.getMetaModel().equals(str)){
 						found = true;
 						break;
@@ -76,8 +76,8 @@ public class RuleBuilder {
 		return parent.rule(ruleName);
 	}
 	
-	public Rule getContent() {
-		return new Rule(name, inVar, inType, condition, outVar, outType, bindings);
+	public RuleR getContent() {
+		return new RuleR(name, inVar, inType, condition, outVar, outType, bindings);
 	}
 	
 }

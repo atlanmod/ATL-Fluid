@@ -4,30 +4,70 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.m2m.atl.common.ATL.ATLFactory;
+import org.eclipse.m2m.atl.common.ATL.ATLPackage;
+import org.eclipse.m2m.atl.common.ATL.Module;
+import org.eclipse.m2m.atl.common.OCL.OCLFactory;
+import org.eclipse.m2m.atl.common.OCL.OCLPackage;
+import org.eclipse.m2m.atl.common.OCL.OclModel;
+
 
 public class ModuleBuilder {
 	private List<RuleBuilder> rules = new ArrayList<RuleBuilder>();
 	
 	private String moduleName;
-	private List<Model> outModels = new ArrayList<Model>();
-	private List<Model> inModels = new ArrayList<Model>();
+	private List<ModelR> outModels = new ArrayList<ModelR>();
+	private List<ModelR> inModels = new ArrayList<ModelR>();
+	private OclModel inModel;
+	private OclModel inMetaModel;
+	private OclModel outModel;
+	private OclModel outMetaModel;
+	
+	private Module module;
+	private ATLFactory factory;
+	private OCLFactory ofactory;
+	
 	
 	public ModuleBuilder(){
-		
+		ATLPackage.eINSTANCE.eClass();
+		OCLPackage.eINSTANCE.eClass();
+		factory = ATLFactory.eINSTANCE;
+		ofactory = OCLFactory.eINSTANCE;
+		module = factory.createModule();
 	}
 	
 	public ModuleBuilder module(String name) {
 		moduleName = name;
+		module.setName(name);
 		return this;
 	}
 	
 	public ModuleBuilder create(String name, String meta) {
-		outModels.add(new Model(name, meta));
+		outModels.add(new ModelR(name, meta));
+		outModel = ofactory.createOclModel();
+		outModel.setName(name);
+		
+		outMetaModel = ofactory.createOclModel();
+		outMetaModel.setName(meta);
+		outModel.setMetamodel(outMetaModel); // erreur de references avec metamodel
+		
+		//outModel.setMetamodel(outMetaModel);
+		
+		module.getOutModels().add(outModel);
 		return this;
 	}
 	
 	public ModuleBuilder from(String name, String meta) {
-		inModels.add(new Model(name, meta));
+		inModels.add(new ModelR(name, meta));
+		inModel = ofactory.createOclModel();
+		inModel.setName(name);
+		/*
+		inMetaModel = ofactory.createOclModel();
+		inMetaModel.setName(meta);
+	
+		inModel.setMetamodel(inMetaModel);
+		*/
+		module.getInModels().add(inModel);
 		return this;
 	}
 	
@@ -39,26 +79,30 @@ public class ModuleBuilder {
 		
 	}
 	
-	public List<Model> getInModel(){
+	public List<ModelR> getInModel(){
 		return inModels;
 	}
 	
-	public List<Model> getOutModels(){
+	public List<ModelR> getOutModels(){
 		return outModels;
 	}
 	
-	public Module getContent(){
-		Module result = new Module(moduleName);
-		for(Model m : inModels){
+	public ModuleR getContent(){
+		ModuleR result = new ModuleR(moduleName);
+		for(ModelR m : inModels){
 			result.addInModel(m);
 		}
-		for(Model m : outModels){
+		for(ModelR m : outModels){
 			result.addOutModel(m);
 		}
 		for(RuleBuilder rb : rules){
 			result.addRule(rb.getContent());
 		}
 		return result;
+	}
+	
+	public Module getModule(){
+		return module;
 	}
 
 }

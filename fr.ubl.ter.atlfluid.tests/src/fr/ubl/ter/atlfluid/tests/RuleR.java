@@ -2,7 +2,7 @@ package fr.ubl.ter.atlfluid.tests;
 
 import java.util.List;
 
-public class Rule {
+public class RuleR {
 	private String name;
 	private String inVar;
 	private String inType;
@@ -11,7 +11,7 @@ public class Rule {
 	private String outType;
 	private List<Binding> bindings;
 	
-	public Rule(String name,String inVar,String inType,String condition,String outVar,String outType,List<Binding> bindings){
+	public RuleR(String name,String inVar,String inType,String condition,String outVar,String outType,List<Binding> bindings){
 		this.name = name;
 		this.inVar = inVar;
 		this.inType = inType;

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.m2m.atl.common.ATL.Module;
 import org.eclipse.m2m.atl.common.OCL.OCLFactory;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.core.IExtractor;
@@ -95,9 +96,11 @@ public class Main {
 				.from
 		*/
 		
-		Module module = moduleBuilder.getContent();
+		ModuleR module = moduleBuilder.getContent();
 		System.out.println(module); 
+		Module mod = moduleBuilder.getModule();
 		
+		/*
 		ModelFactory modelFactory = new EMFModelFactory();
 		IInjector injector = new EMFInjector();
 		IExtractor extractor = new EMFExtractor();
@@ -158,23 +161,25 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		/*
+*/
+		
 		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		Map<String, Object> m = reg.getExtensionToFactoryMap();
 		m.put("transformation", new XMIResourceFactoryImpl());
 		
 		ResourceSet resSet = new ResourceSetImpl();
 		
+		System.out.println("before creating resource");
 		Resource resource = resSet.createResource(URI.createURI("transformation/MyTransform.transformation"));
-		resource.getContents().add(OCLFactory.eINSTANCE.createOclModel());
+		resource.getContents().add(mod);
+		System.out.println("after adding module to ressource");
 		
 		try {
             resource.save(Collections.EMPTY_MAP);
 		} catch (IOException e) {
             e.printStackTrace();
 		}
-		*/
+		
 	}
 }
 
