@@ -18,8 +18,6 @@ import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
 import org.eclipse.m2m.atl.engine.emfvm.lib.ExecEnv;
 
-import org.eclipse.m2m.atl.emftvm.*;
-
 import fr.ubl.ter.atlfluid.tests.*;
 
 public class Main {
