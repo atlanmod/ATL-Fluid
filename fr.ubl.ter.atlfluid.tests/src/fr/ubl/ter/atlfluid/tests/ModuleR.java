@@ -30,10 +30,10 @@ public class ModuleR {
 	}
 	
 	public String toString(){
-		String res = "module  " + moduleName + "{ \n";
+		String res = "module  " + moduleName + "; \n";
 		for(int i=0; i < outModels.size();i++){
 			res +=   "  create " + outModels.get(i).getName() + " : " + outModels.get(i).getMetaModel() +
-					" from " + inModels.get(i).getName() + " : " + inModels.get(i).getMetaModel() + "\n";
+					" from " + inModels.get(i).getName() + " : " + inModels.get(i).getMetaModel() + ";\n";
 		}
 		for (RuleR r : rules) 
 			res += r.toString()+"\n";
