@@ -1,9 +1,17 @@
 package fr.ubl.ter.atlfluid.tests;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.m2m.atl.common.ATL.ATLFactory;
 import org.eclipse.m2m.atl.common.ATL.ATLPackage;
 import org.eclipse.m2m.atl.common.ATL.Module;
@@ -50,9 +58,7 @@ public class ModuleBuilder {
 		outMetaModel = ofactory.createOclModel();
 		outMetaModel.setName(meta);
 		outModel.setMetamodel(outMetaModel); // erreur de references avec metamodel
-		
-		//outModel.setMetamodel(outMetaModel);
-		
+			
 		module.getOutModels().add(outModel);
 		return this;
 	}
