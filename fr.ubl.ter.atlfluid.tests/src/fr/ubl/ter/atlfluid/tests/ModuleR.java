@@ -37,7 +37,7 @@ public class ModuleR {
 		}
 		for (RuleR r : rules) 
 			res += r.toString()+"\n";
-		res += "}";
+		//res += "}";
 		return res;
 	}
 }

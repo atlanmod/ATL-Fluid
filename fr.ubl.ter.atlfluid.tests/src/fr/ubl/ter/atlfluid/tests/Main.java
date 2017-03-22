@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
@@ -28,7 +29,9 @@ import org.eclipse.m2m.atl.core.IReferenceModel;
 import org.eclipse.m2m.atl.core.ModelFactory;
 import org.eclipse.m2m.atl.core.emf.EMFExtractor;
 import org.eclipse.m2m.atl.core.emf.EMFInjector;
+import org.eclipse.m2m.atl.core.emf.EMFModel;
 import org.eclipse.m2m.atl.core.emf.EMFModelFactory;
+import org.eclipse.m2m.atl.core.emf.EMFReferenceModel;
 import org.eclipse.m2m.atl.core.launch.ILauncher;
 import org.eclipse.m2m.atl.engine.compiler.*;
 import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
@@ -102,8 +105,10 @@ public class Main {
 		
 		/*
 		ModelFactory modelFactory = new EMFModelFactory();
+		
 		IInjector injector = new EMFInjector();
 		IExtractor extractor = new EMFExtractor();
+		
 		IReferenceModel atlMetamodel;
 		IReferenceModel emfMetamodel; 
 		IModel aModel;
@@ -162,6 +167,81 @@ public class Main {
 			e.printStackTrace();
 		}
 */
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+		
+		
+		// create stuff
+		EMFModelFactory emfFactory = new EMFModelFactory();
+		XMIResourceFactoryImpl xmiFactory = new XMIResourceFactoryImpl();
+
+		EMFExtractor extractor = new EMFExtractor();
+		EMFInjector emfInjector = new EMFInjector();
+		ResourceSet resourceSet = new ResourceSetImpl();
+
+		// load model
+		EMFReferenceModel hdlMetaModel = (EMFReferenceModel) emfFactory.newReferenceModel();
+		emfInjector.inject(hdlMetaModel, resourceSet.getResource(URI.createFileURI("org.xtext.hal/model/generated/Hdl.ecore"), true));
+		EMFModel hdlData = (EMFModel) emfFactory.newModel(hdlMetaModel);
+
+		EMFReferenceModel palMetaModel = (EMFReferenceModel) emfFactory.newReferenceModel();
+		emfInjector.inject(palMetaModel, resourceSet.getResource(URI.createFileURI("org.xtext.hal/model/Pal.ecore"), true));
+		EMFModel palData = (EMFModel) emfFactory.newModel(palMetaModel);
+		palData.setIsTarget(true);
+
+		// load xtext content, convert to xmi
+		Resource xmiResource = xmiFactory.createResource(URI.createURI("org.xtext.hal/model/generated/Hdl.xmi"));
+		xmiResource.getContents().addAll(hdlModel.getContents());
+		emfInjector.inject(hdlData, xmiResource);
+
+		// ATL transformation
+		InputStream asm = new FileInputStream("org.xtext.hal/model/Pal.asm");
+		EMFVMLauncher launcher = new EMFVMLauncher();
+
+		HashMap<String,Object> options = new HashMap<String,Object>();
+		options.put("showSummary", "true");
+		options.put("step", "true");
+		
+		launcher.initialize(Collections.<String, Object> emptyMap());
+		launcher.addInModel(hdlData, "IN", "hdl");
+		launcher.addOutModel(palData, "OUT", "pal");
+		launcher.launch(ILauncher.DEBUG_MODE, new NullProgressMonitor(), options, asm);
+
+		// get output
+		Resource t_palData = palData.getResource();
+		t_palData.setURI(URI.createURI("palData.xmi")); // Exception in thread "main" java.lang.NullPointerException
+		t_palData.save(null);
+		
+		
+		*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		Map<String, Object> m = reg.getExtensionToFactoryMap();

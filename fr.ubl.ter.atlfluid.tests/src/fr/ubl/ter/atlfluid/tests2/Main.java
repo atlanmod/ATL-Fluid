@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
-/*
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -16,9 +16,9 @@ import org.eclipse.m2m.atl.emftvm.impl.resource.EMFTVMResourceFactoryImpl;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
-import org.eclipse.m2m.atl.engine.emfvm.lib.ExecEnv;*/
+import org.eclipse.m2m.atl.engine.emfvm.lib.ExecEnv;
 
-import org.eclipse.m2m.atl.emftvm.Module;
+//import org.eclipse.m2m.atl.emftvm.Module;
 
 import fr.ubl.ter.atlfluid.tests.*;
 
