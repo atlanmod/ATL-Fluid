@@ -37,24 +37,32 @@ public class Main {
 		//creation du module atl
 		ModuleBuilder moduleBuilder = new ModuleBuilder();
 		
-		/*
+		
+/*		moduleBuilder.module("Families2Persons")
+		.create("OUT",Person.class.getPackage())
+		.from("IN",Family.class.getPackage())
+		.rule("Member2Male")
+			.from((Member s) ->!s.isFemale())
+			.to((Male t)->{t.setFullName(s.firstName + ' ' + s.familyName);
+						   t.setFullName(s.firstName + ' ' + s.familyName);});*/
+
 		moduleBuilder.module("Families2Persons")
 		.create("OUT",Person.class.getPackage())
 		.from("IN",Family.class.getPackage())
 		.rule("Member2Male")
-			.from((s "Families!Member")->{s instanceof Female })
-			.to("t","Persons!Male")
-				.bind("fullName","s.firstName");
-		*/
+			.from((Member s) ->
+			   { () -> !s.isFemale(),
+			     (Male t)->{t.setFullName(s.firstName + ' ' + s.familyName);
+						    t.setFullName(s.firstName + ' ' + s.familyName);}};
 		
-		moduleBuilder.module("Families2Persons")
+		/* Version 1
 		.create("OUT",Person.class.getPackage())
 		.from("IN",Family.class.getPackage())
 		.rule("Member2Male")
 			.from("s","Families!Member")
-				.pattern(/*"not s.isFemale()"*/(s)->{return !(s instanceof Female); })
+				.pattern(/"not s.isFemale()"/(s)->{return !(s instanceof Female); })
 			.to("t","Persons!Male")
-				.bind("fullName","s.firstName");
+				.bind("fullName","s.firstName");*/
 		
 		Module mod = (Module) moduleBuilder.getModule();
 		

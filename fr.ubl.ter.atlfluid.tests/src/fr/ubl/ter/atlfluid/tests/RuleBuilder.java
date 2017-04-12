@@ -2,12 +2,15 @@ package fr.ubl.ter.atlfluid.tests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.atl.common.ATL.Rule;
 import org.eclipse.m2m.atl.common.ATL.RuleVariableDeclaration;
 
 import Families.Member;
+import Persons.Male;
 
 public class RuleBuilder {
 	private ModuleBuilder parent;
@@ -20,17 +23,18 @@ public class RuleBuilder {
 		this.parent = parent;
 	}
 	
-	public RuleBuilder from(String var, Object type ) {
-		RuleVariableDeclaration rvd = parent.getAtlFactory().createRuleVariableDeclaration();
+	public RuleBuilder from(Predicate<Member> p) {
+		/*RuleVariableDeclaration rvd = parent.getAtlFactory().createRuleVariableDeclaration();
 		rvd.setRule(atlRule);
 		rvd.setVarName(var);
 		atlRule.getVariables().add(rvd);
 		
 		inType = type;
-		return this;
+		return this;*/
+		return null;
 	}
 	
-	public RuleBuilder to(String var, Object type) {
+	public RuleBuilder to(Consumer<Male> p) {
 		
 		return this;
 	}
