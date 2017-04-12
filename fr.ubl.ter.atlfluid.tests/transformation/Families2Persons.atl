@@ -20,6 +20,17 @@ helper context Families!Member def: familyName : String =
 		endif
 	endif;
 
+helper context Families!Member def: isFemale() : Boolean =
+	if not self.familyMother.oclIsUndefined() then
+		true
+	else
+		if not self.familyDaughter.oclIsUndefined() then
+			true
+		else
+			false
+		endif
+	endif;
+	
 rule Member2Male {
 	from
 		s : Families!Member (not s.isFemale())
