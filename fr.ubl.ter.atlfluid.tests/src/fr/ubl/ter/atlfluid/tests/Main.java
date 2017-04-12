@@ -99,8 +99,8 @@ public class Main {
 				.from
 		*/
 		
-		ModuleR module = moduleBuilder.getContent();
-		System.out.println(module); 
+		//ModuleR module = moduleBuilder.getContent();
+		//System.out.println(module); 
 		Module mod = moduleBuilder.getModule();
 		
 		/*
@@ -251,7 +251,16 @@ public class Main {
 		
 		System.out.println("before creating resource");
 		Resource resource = resSet.createResource(URI.createURI("transformation/MyTransform.transformation"));
-		resource.getContents().add(mod);
+		if(mod == null){
+			System.out.println("module is NULL");
+		}else{
+			if(resource != null){
+				resource.getContents().add(mod);
+			}else{
+				System.out.println("resource is null");
+			}
+		}
+		
 		System.out.println("after adding module to ressource");
 		
 		try {

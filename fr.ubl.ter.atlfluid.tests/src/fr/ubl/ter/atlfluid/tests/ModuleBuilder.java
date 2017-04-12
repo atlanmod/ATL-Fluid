@@ -1,6 +1,7 @@
 package fr.ubl.ter.atlfluid.tests;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,25 +16,28 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.m2m.atl.common.ATL.ATLFactory;
 import org.eclipse.m2m.atl.common.ATL.ATLPackage;
 import org.eclipse.m2m.atl.common.ATL.Module;
+import org.eclipse.m2m.atl.common.ATL.Rule;
 import org.eclipse.m2m.atl.common.OCL.OCLFactory;
 import org.eclipse.m2m.atl.common.OCL.OCLPackage;
 import org.eclipse.m2m.atl.common.OCL.OclModel;
 
-
 public class ModuleBuilder {
 	private List<RuleBuilder> rules = new ArrayList<RuleBuilder>();
 	
-	private String moduleName;
-	private List<ModelR> outModels = new ArrayList<ModelR>();
-	private List<ModelR> inModels = new ArrayList<ModelR>();
 	private OclModel inModel;
 	private OclModel inMetaModel;
 	private OclModel outModel;
 	private OclModel outMetaModel;
+	private List<Rule> atlRules = new ArrayList<Rule>();
 	
 	private Module module;
 	private ATLFactory factory;
 	private OCLFactory ofactory;
+	
+	private Package inPackage;
+	private Package outPackage;
+	
+	
 	
 	
 	public ModuleBuilder(){
@@ -45,35 +49,55 @@ public class ModuleBuilder {
 	}
 	
 	public ModuleBuilder module(String name) {
-		moduleName = name;
 		module.setName(name);
 		return this;
 	}
 	
-	public ModuleBuilder create(String name, String meta) {
-		outModels.add(new ModelR(name, meta));
+	public ModuleBuilder create(String name,Package metacls) {
 		outModel = ofactory.createOclModel();
 		outModel.setName(name);
 		
+		
+		outPackage = metacls;
+		System.out.println("package name = " + metacls.getName());
+		List<Class<?>> classes = ClassFinder.find(metacls.getName());
+		if(classes.isEmpty()){
+			System.out.println("empty package");
+		}else{
+			System.out.println("package not empty");
+			for(Class<?> c : classes){
+				System.out.println(c.getName());
+			}
+		}
+		
+		
 		outMetaModel = ofactory.createOclModel();
-		outMetaModel.setName(meta);
+		outMetaModel.setName(metacls.getName());
+		
+		
+		module.getOutModels().add(outMetaModel);
 		outModel.setMetamodel(outMetaModel); // erreur de references avec metamodel
-			
+		
 		module.getOutModels().add(outModel);
+		
+		
 		return this;
 	}
 	
-	public ModuleBuilder from(String name, String meta) {
-		inModels.add(new ModelR(name, meta));
+	public ModuleBuilder from(String name, Package metacls) {
 		inModel = ofactory.createOclModel();
 		inModel.setName(name);
-		/*
+		
+		inPackage = metacls;
+		
 		inMetaModel = ofactory.createOclModel();
-		inMetaModel.setName(meta);
+		inMetaModel.setName(metacls.getName());
 	
+		
+		module.getInModels().add(inMetaModel);
 		inModel.setMetamodel(inMetaModel);
-		*/
 		module.getInModels().add(inModel);
+		
 		return this;
 	}
 	
@@ -85,30 +109,23 @@ public class ModuleBuilder {
 		
 	}
 	
-	public List<ModelR> getInModel(){
-		return inModels;
-	}
-	
-	public List<ModelR> getOutModels(){
-		return outModels;
-	}
-	
-	public ModuleR getContent(){
-		ModuleR result = new ModuleR(moduleName);
-		for(ModelR m : inModels){
-			result.addInModel(m);
-		}
-		for(ModelR m : outModels){
-			result.addOutModel(m);
-		}
-		for(RuleBuilder rb : rules){
-			result.addRule(rb.getContent());
-		}
-		return result;
-	}
-	
 	public Module getModule(){
+		for(RuleBuilder rb : rules){
+			atlRules.add(rb.getRule());
+		}
+		//set all the rules in the module
+		for(Rule r : atlRules){
+			module.getElements().add(r);
+		}
+		
 		return module;
 	}
-
+	
+	public ATLFactory getAtlFactory(){
+		return factory;
+	}
+	
+	public Package getInPackage(){
+		return inPackage;
+	}
 }

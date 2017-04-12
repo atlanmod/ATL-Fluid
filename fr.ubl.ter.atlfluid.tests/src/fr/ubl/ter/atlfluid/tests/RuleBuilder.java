@@ -2,82 +2,58 @@ package fr.ubl.ter.atlfluid.tests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+
+import org.eclipse.m2m.atl.common.ATL.Rule;
+import org.eclipse.m2m.atl.common.ATL.RuleVariableDeclaration;
+
+import Families.Member;
 
 public class RuleBuilder {
 	private ModuleBuilder parent;
-	private String name;
-	private String inVar;
-	private String inType;
-	private String condition;
-	private String outVar;
-	private String outType;
-	private List<Binding> bindings = new ArrayList<Binding>();
+	private Rule atlRule;
+	Object inType;
 	
 	public RuleBuilder(ModuleBuilder parent) {
+		//oclRule.setModule(parent.getModule());
+		atlRule = parent.getAtlFactory().createMatchedRule();
 		this.parent = parent;
 	}
 	
-	private void verifyType(String type){
-		if(!type.contains("!")){
-			throw new Error("the type is not defined");
-		}else{
-			String str = type.substring(0,type.indexOf('!'));
-			boolean found = false;
-			for(ModelR m : parent.getInModel()){
-				if(m.getMetaModel().equals(str)){
-					found = true;
-					break;
-				}
-			}
-			if(!found){
-				for(ModelR m : parent.getOutModels()){
-					if(m.getMetaModel().equals(str)){
-						found = true;
-						break;
-					}
-				}
-			}
-			if(!found){
-				throw new Error("type is not defined");
-			}
-		}
-	}
-	
-	public RuleBuilder from(String var, String type) {
-		inVar = var;
+	public RuleBuilder from(String var, Object type ) {
+		RuleVariableDeclaration rvd = parent.getAtlFactory().createRuleVariableDeclaration();
+		rvd.setRule(atlRule);
+		rvd.setVarName(var);
+		atlRule.getVariables().add(rvd);
+		
 		inType = type;
-		verifyType(type);
 		return this;
 	}
 	
-	public RuleBuilder to(String var, String type) {
-		outVar = var;
-		outType = type;
-		verifyType(type);
+	public RuleBuilder to(String var, Object type) {
+		
 		return this;
 	}
 	
-	public RuleBuilder pattern(String pattern) {
-		condition = pattern;
+	public RuleBuilder pattern(Predicate<Member> pattern){
+		
 		return this;
 	}
 	
 	public RuleBuilder bind(String featName, String expression) {
-		bindings.add(new Binding(featName, expression));
+		//bindings.add(new Binding(featName, expression));
 		return this;
 	}
 	
 	public void setName(String ruleName) {
-		// TODO Auto-generated method stub
-		this.name = ruleName;
+		atlRule.setName(ruleName);
 	}
 	
 	public RuleBuilder rule(String ruleName) {
 		return parent.rule(ruleName);
 	}
 	
-	public RuleR getContent() {
-		return new RuleR(name, inVar, inType, condition, outVar, outType, bindings);
+	public Rule getRule(){
+		return atlRule;
 	}
-	
 }

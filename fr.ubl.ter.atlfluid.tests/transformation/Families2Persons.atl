@@ -1,8 +1,0 @@
-module  Families2Persons; 
-  create OUT : Persons from IN : Families;
-  rule Member2Male {
-    from 
-       s : Families!Member
-    to 
-       t : Persons!Male
-  }
