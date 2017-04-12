@@ -33,7 +33,7 @@ public class Main {
 	
 	public static void main(String[]args) throws IOException {
 		
-		Member m = FamiliesFactory.eINSTANCE.createMember();
+		//Member m = FamiliesFactory.eINSTANCE.createMember();
 		//creation du module atl
 		ModuleBuilder moduleBuilder = new ModuleBuilder();
 		
