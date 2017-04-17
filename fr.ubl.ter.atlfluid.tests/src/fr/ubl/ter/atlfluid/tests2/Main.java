@@ -4,8 +4,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -31,21 +36,36 @@ import Persons.*;
 public class Main {
 
 	
+	@SuppressWarnings("unchecked")
 	public static void main(String[]args) throws IOException {
 		
-		//Member m = FamiliesFactory.eINSTANCE.createMember();
-		//creation du module atl
 		ModuleBuilder moduleBuilder = new ModuleBuilder();
 		
+		//variables modified inside lambda expression
 		
-/*		moduleBuilder.module("Families2Persons")
+		AtomicReference<Member> inref = new AtomicReference<Member>();
+		AtomicReference<Male> outref = new AtomicReference<Male>();
+		Member member = FamiliesFactory.eINSTANCE.createMember();
+		inref.set(member);
+		
+		
+		moduleBuilder.module("Families2Persons")
 		.create("OUT",Person.class.getPackage())
 		.from("IN",Family.class.getPackage())
 		.rule("Member2Male")
-			.from((Member s) ->!s.isFemale())
-			.to((Male t)->{t.setFullName(s.firstName + ' ' + s.familyName);
-						   t.setFullName(s.firstName + ' ' + s.familyName);});*/
+			.from(member,(EObject s)->{
+				Member mem = (Member) s;
+				inref.getAndSet(mem);
+				return !mem.isFemale();
+			})
+			.to((EObject t)->{
+				Member s = inref.get();
+				Male male = (Male) t; 
+				male.setFullName(s.getFirstName() + ' ' + s.getFamilyName());
+				outref.getAndSet(male);
+			});
 
+		/*
 		moduleBuilder.module("Families2Persons")
 		.create("OUT",Person.class.getPackage())
 		.from("IN",Family.class.getPackage())
@@ -54,6 +74,7 @@ public class Main {
 			   { () -> !s.isFemale(),
 			     (Male t)->{t.setFullName(s.firstName + ' ' + s.familyName);
 						    t.setFullName(s.firstName + ' ' + s.familyName);}};
+		*/
 		
 		/* Version 1
 		.create("OUT",Person.class.getPackage())

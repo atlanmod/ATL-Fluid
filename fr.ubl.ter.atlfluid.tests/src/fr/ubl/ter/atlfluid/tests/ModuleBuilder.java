@@ -1,14 +1,18 @@
 package fr.ubl.ter.atlfluid.tests;
 
 import java.io.IOException;
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -37,8 +41,7 @@ public class ModuleBuilder {
 	private Package inPackage;
 	private Package outPackage;
 	
-	
-	
+	public List<Class<?>> classes;
 	
 	public ModuleBuilder(){
 		ATLPackage.eINSTANCE.eClass();
@@ -53,27 +56,15 @@ public class ModuleBuilder {
 		return this;
 	}
 	
-	public ModuleBuilder create(String name,Package metacls) {
+	public ModuleBuilder create(String name,Package metacls){
 		outModel = ofactory.createOclModel();
 		outModel.setName(name);
 		
 		
 		outPackage = metacls;
 		System.out.println("package name = " + metacls.getName());
-		List<Class<?>> classes = ClassFinder.find(metacls.getName());
-		if(classes.isEmpty()){
-			System.out.println("empty package");
-		}else{
-			System.out.println("package not empty");
-			for(Class<?> c : classes){
-				System.out.println(c.getName());
-			}
-		}
-		
-		
 		outMetaModel = ofactory.createOclModel();
 		outMetaModel.setName(metacls.getName());
-		
 		
 		module.getOutModels().add(outMetaModel);
 		outModel.setMetamodel(outMetaModel); // erreur de references avec metamodel
@@ -83,6 +74,7 @@ public class ModuleBuilder {
 		
 		return this;
 	}
+	
 	
 	public ModuleBuilder from(String name, Package metacls) {
 		inModel = ofactory.createOclModel();
@@ -121,9 +113,11 @@ public class ModuleBuilder {
 		return module;
 	}
 	
+	
 	public ATLFactory getAtlFactory(){
 		return factory;
 	}
+	
 	
 	public Package getInPackage(){
 		return inPackage;

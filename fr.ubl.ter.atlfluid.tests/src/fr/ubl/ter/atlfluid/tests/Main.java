@@ -80,6 +80,7 @@ public class Main {
 		
 		ModuleBuilder moduleBuilder = new ModuleBuilder();
 		
+		/*
 		moduleBuilder.module("ClassDiagram2Relational")
 			.create("OUT","Relational")
 			.from("IN","ClassDiagram")
@@ -94,9 +95,6 @@ public class Main {
 					.pattern("ClassDiagram!Class.allInstances()->select(c | c.name = d.name)->isEmpty()")
 				.to("t", "Relational!Type")
 					.bind("name", "d.name");
-			/* Partie non encore implémentée
-			.rule("DataType2Type")
-				.from
 		*/
 		
 		//ModuleR module = moduleBuilder.getContent();
