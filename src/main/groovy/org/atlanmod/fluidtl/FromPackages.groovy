@@ -2,8 +2,8 @@ package org.atlanmod.fluidtl
 
 import org.eclipse.emf.ecore.EPackage
 
-interface From {
+interface FromPackages {
 
-    from(EPackage model)
+    from(EPackage... models)
 
 }

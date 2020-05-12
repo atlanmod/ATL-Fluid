@@ -1,25 +1,28 @@
 package org.atlanmod.example
 
 import org.atlanmod.fluidtl.Module
+import org.atlanmod.fluidtl.Rule
 import org.eclipse.gmt.modisco.java.emf.meta.JavaPackage
 import org.omg.smm.Measurement
 import org.omg.smm.SmmPackage
 import org.ter.fluidtl.ModuleBuilder
+
+import static org.eclipse.gmt.modisco.java.emf.meta.JavaPackage.CLASS_DECLARATION__NAME
+import static org.omg.smm.SmmPackage.MEASUREMENT__NAME
+
 
 class Main {
 
     Main() {
         Module module = ModuleBuilder
                 .create(SmmPackage.eINSTANCE)
-                .from(JavaPackage.eINSTANCE)
+                .from(JavaPackage.eINSTANCE, JavaPackage.eINSTANCE)
 
-        /*
         Rule class2mesure = module
                 .createRule("class2mesure")
                 .from(JavaPackage.CLASS_DECLARATION)
                 .to(SmmPackage.MEASURE)
-                .bind(SmmPackage.MEASURE__NAME, "name")
-        */
+                .bind(MEASUREMENT__NAME, CLASS_DECLARATION__NAME)
     }
 
     public static void main(String[] args) {
